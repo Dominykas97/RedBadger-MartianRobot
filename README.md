@@ -1,1 +1,3 @@
 # RedBadger-MartianRobot
+
+export PYTHONPATH=.
