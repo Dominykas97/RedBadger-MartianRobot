@@ -27,15 +27,20 @@ class Board():
         for line in lines:
             print(line)
         f.close()
+
+
     def get_direction(self):
         return self.direction_map.get(self.direction)
+
+    
     def next(self):
         first_line = self.lines[0].split(" ")
         self.x = int(first_line[0])
         self.y = int(first_line[1])
         self.direction = self.direction_map2.get(first_line[2])
         movement = self.lines[1]
-        self.lines[2:]
+        self.lines = self.lines[3:]
+        print(f"INIT: {self.x} {self.y} {self.get_direction()}")
 
 #  0 
 # 3 1 
@@ -54,11 +59,25 @@ class Board():
             print(self.direction)
             if move == "F":
                 if self.direction == 0:
-                    self.y += 1
+                    if self.y < self.boardY:
+                        self.y += 1
+                    else:
+                        return f"{self.x} {self.y} {self.get_direction()} LOST"
                 if self.direction == 2:
-                    self.y -= 1
+                    if self.y > 0:
+                        self.y -= 1
+                    else:
+                        return f"{self.x} {self.y} {self.get_direction()} LOST"
                 if self.direction == 1:
-                    self.x += 1
+                    if self.x < self.boardX:
+                        self.x += 1
+                    else:
+                        return f"{self.x} {self.y} {self.get_direction()} LOST"
                 if self.direction == 3:
-                    self.x -= 1
+                    if self.x > 0:
+                        self.x -= 1
+                    else:
+                        return f"{self.x} {self.y} {self.get_direction()} LOST"
+
             print(move)
+            print(f"{self.x} {self.y} {self.get_direction()}")

@@ -16,6 +16,12 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(self.board.y, 1, "Y should be 1")
         self.assertEqual(self.board.get_direction(), "E", "Direction should be E")
 
+    def test_second_robot(self):
+        status = self.board.next()
+        self.assertEqual(self.board.x, 3, "X should be 3")
+        self.assertEqual(self.board.y, 3, "Y should be 3")
+        self.assertEqual(self.board.get_direction(), "N", "Direction should be N")
+        self.assertEqual(status, "3 3 N LOST", " ")
 
 if __name__ == '__main__':
     unittest.main()
