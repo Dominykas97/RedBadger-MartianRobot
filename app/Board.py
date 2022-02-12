@@ -13,6 +13,7 @@ class Board():
         "S":2,
         "W":3,
     }
+    scents = {}
     def __init__(self, filename):
 
         f = open(filename,"r")
@@ -28,6 +29,11 @@ class Board():
             print(line)
         f.close()
 
+    def get_x(self):
+        return self.x
+    
+    def get_y(self):
+        return self.y
 
     def get_direction(self):
         return self.direction_map.get(self.direction)
@@ -62,22 +68,39 @@ class Board():
                     if self.y < self.boardY:
                         self.y += 1
                     else:
-                        return f"{self.x} {self.y} {self.get_direction()} LOST"
+                        if self.scents.get(f"{self.x},{self.y}") == 1:
+                            pass
+                        else:
+                            self.scents[f"{self.x},{self.y}"] = 1
+                            return f"{self.x} {self.y} {self.get_direction()} LOST"
                 if self.direction == 2:
                     if self.y > 0:
                         self.y -= 1
                     else:
-                        return f"{self.x} {self.y} {self.get_direction()} LOST"
+                        if self.scents.get(f"{self.x},{self.y}") == 1:
+                            pass
+                        else:
+                            self.scents[f"{self.x},{self.y}"] = 1
+                            return f"{self.x} {self.y} {self.get_direction()} LOST"
                 if self.direction == 1:
                     if self.x < self.boardX:
                         self.x += 1
                     else:
-                        return f"{self.x} {self.y} {self.get_direction()} LOST"
+                        if self.scents.get(f"{self.x},{self.y}") == 1:
+                            pass
+                        else:
+                            self.scents[f"{self.x},{self.y}"] = 1
+                            return f"{self.x} {self.y} {self.get_direction()} LOST"
                 if self.direction == 3:
                     if self.x > 0:
                         self.x -= 1
                     else:
-                        return f"{self.x} {self.y} {self.get_direction()} LOST"
+                        if self.scents.get(f"{self.x},{self.y}") == 1:
+                            pass
+                        else:
+                            self.scents[f"{self.x},{self.y}"] = 1
+                            return f"{self.x} {self.y} {self.get_direction()} LOST"
 
             print(move)
             print(f"{self.x} {self.y} {self.get_direction()}")
+        return f"{self.x} {self.y} {self.get_direction()}"
