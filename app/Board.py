@@ -22,10 +22,10 @@ class Board():
         self.boardX = int(first_line[0])
         self.boardY = int(first_line[1])
         lines = lines[1:]
-        print(first_line)
+        # print(first_line)
         self.lines = lines
-        for line in lines:
-            print(line)
+        # for line in lines:
+        #     print(line)
         f.close()
 
     def get_x(self):
@@ -41,13 +41,16 @@ class Board():
         return f"{self.x} {self.y} {self.get_direction()}"
 
     def next(self):
+        if len(self.lines) == 0:
+            print("No more instructions")
+            return "No more instructions"
         first_line = self.lines[0].split(" ")
         self.x = int(first_line[0])
         self.y = int(first_line[1])
         self.direction = self.direction_map2.get(first_line[2])
         movement = self.lines[1]
         self.lines = self.lines[3:]
-        print(f"INIT: {self.get_status()}")
+        # print(f"INIT: {self.get_status()}")
 
         #  0
         # 3 1
@@ -59,23 +62,29 @@ class Board():
                 self.direction = (self.direction + 1) % 4
             scent = -1
             if move == "F":
-                if self.direction == 0 and self.y < self.boardY:
+                if self.direction_map.get(
+                        self.direction) == "N" and self.y < self.boardY:
                     self.y += 1
-                elif self.direction == 2 and self.y > 0:
+                elif self.direction_map.get(
+                        self.direction) == "S" and self.y > 0:
                     self.y -= 1
-                elif self.direction == 1 and self.x < self.boardX:
+                elif self.direction_map.get(
+                        self.direction) == "E" and self.x < self.boardX:
                     self.x += 1
-                elif self.direction == 3 and self.x > 0:
+                elif self.direction_map.get(
+                        self.direction) == "W" and self.x > 0:
                     self.x -= 1
                 else:
                     scent = self.check_present_scent()
 
-            print(self.direction)
-            print(move)
-            print(f"{self.x} {self.y} {self.get_direction()}")
+            # print(self.direction)
+            # print(move)
+            # print(f"{self.x} {self.y} {self.get_direction()}")
 
             if not scent:
+                print(f"{self.get_status()} LOST")
                 return f"{self.get_status()} LOST"
+        print(self.get_status())
         return self.get_status()
 
     def check_present_scent(self):
