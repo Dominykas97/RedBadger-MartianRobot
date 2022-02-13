@@ -2,9 +2,10 @@ import unittest
 
 from app.board import Board
 
+
 class TestBoard(unittest.TestCase):
     board = Board("input.txt")
-
+    board3 = Board("moving_test.txt")
 
     def test1_board_init(self):
         self.assertEqual(self.board.board_x, 5, "boardX should be 5")
@@ -32,13 +33,36 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(status, "2 3 S", " ")
 
     def test5_nonexistant_robot(self):
-    #     # with self.assertRaises(Exception) as context:
         status = self.board.next()
-        self.assertEqual(1, 1)
         self.assertEqual(status, "No more instructions", "")
-        # self.assertTrue('This is broken' in context.exception)
-        # status = self.board.next()
-        # self.assertRaises(IndexError, self.board.next())
 
-if __name__ == '__main__':
+    def test6_nonexistant_direction(self):
+        board2 = Board("broken_direction.txt")
+
+        status = board2.next()
+        self.assertEqual(status, "Can't parse non exsitant direction", "")
+
+    def test7_movement(self):
+        status = self.board3.next()
+        self.assertEqual(self.board3.get_robot_x(), 0, "X should be 0")
+        self.assertEqual(self.board3.get_robot_y(), 4, "Y should be 4")
+        self.assertEqual(self.board3.get_direction(), "N", "Direction should be N")
+        self.assertEqual(status, "0 4 N")
+
+    def test8_turn_right(self):
+        status = self.board3.next()
+        self.assertEqual(self.board3.get_robot_x(), 0, "X should be 0")
+        self.assertEqual(self.board3.get_robot_y(), 0, "Y should be 0")
+        self.assertEqual(self.board3.get_direction(), "E", "Direction should be E")
+        self.assertEqual(status, "0 0 E")
+
+    def test9_turn_left(self):
+        status = self.board3.next()
+        self.assertEqual(self.board3.get_robot_x(), 0, "X should be 0")
+        self.assertEqual(self.board3.get_robot_y(), 0, "Y should be 0")
+        self.assertEqual(self.board3.get_direction(), "W", "Direction should be W")
+        self.assertEqual(status, "0 0 W")
+
+
+if __name__ == "__main__":
     unittest.main()

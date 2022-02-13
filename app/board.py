@@ -15,6 +15,7 @@ direction_map2: dict[str, int] = {
     "W": 3,
 }
 BROKEN = "No more instructions"
+NON_EXISTANT_DIRECTION = "Can't parse non exsitant direction"
 
 
 class Board:
@@ -75,14 +76,14 @@ class Board:
         """Gets next robot movement from file in memory"""
 
         if len(self.lines) == 0:
-            print(BROKEN)
             return BROKEN
         first_line = self.lines[0].split(" ")
         self.set_robot_x(int(first_line[0]))
         self.set_robot_y(int(first_line[1]))
-        self.set_direction(first_line[2])
-        if self.get_direction == -1:
-            return BROKEN
+        if len(first_line[2]) and first_line[2] in "NEWS":
+            self.set_direction(first_line[2])
+        else:
+            return NON_EXISTANT_DIRECTION
         movement: str = self.lines[1]
         self.lines = self.lines[3:]
         return movement
@@ -90,7 +91,8 @@ class Board:
     def next(self) -> str:
         """Processes next robot movement"""
         movement: str = self.get_next_robot_instructions()
-        if movement == BROKEN:
+        if movement in [BROKEN, NON_EXISTANT_DIRECTION]:
+            print(movement)
             return movement
         self.lost = False
         # print(f"INIT: {self.get_status()}")
@@ -105,17 +107,19 @@ class Board:
             if move == "R":
                 self.direction = (self.direction + 1) % 4
             if move == "F":
-                if (direction_map.get(self.direction) == "N"
-                        and self.robot_y < self.board_y):
+                if (
+                    direction_map.get(self.direction) == "N"
+                    and self.robot_y < self.board_y
+                ):
                     self.robot_y += 1
-                elif direction_map.get(
-                        self.direction) == "S" and self.robot_y > 0:
+                elif direction_map.get(self.direction) == "S" and self.robot_y > 0:
                     self.robot_y -= 1
-                elif (direction_map.get(self.direction) == "E"
-                      and self.robot_x < self.board_x):
+                elif (
+                    direction_map.get(self.direction) == "E"
+                    and self.robot_x < self.board_x
+                ):
                     self.robot_x += 1
-                elif direction_map.get(
-                        self.direction) == "W" and self.robot_x > 0:
+                elif direction_map.get(self.direction) == "W" and self.robot_x > 0:
                     self.robot_x -= 1
                 else:
                     scent = self.check_present_scent()

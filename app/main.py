@@ -1,16 +1,23 @@
-# from app import Board
-
-
 from app.board import Board
+import argparse
 
 
 def main():
-    board = Board("input.txt")
+    input_file = "input.txt"
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("-f", "--File", help="Specify input file")
+
+    args = parser.parse_args()
+
+    if args.File:
+        input_file = args.File
+
+    board = Board(input_file)
     board.next()
     board.next()
     board.next()
-    # board.next()
-  
-  
-if __name__=="__main__":
+
+
+if __name__ == "__main__":
     main()
