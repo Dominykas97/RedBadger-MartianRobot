@@ -1,5 +1,6 @@
 import argparse
 from app.board import Board
+from app.constants import BROKEN
 
 
 def main():
@@ -14,9 +15,9 @@ def main():
         input_file = args.File
 
     board = Board(input_file)
-    board.next()
-    board.next()
-    board.next()
+    while status := board.next():
+        if status == BROKEN:
+            break
 
 
 if __name__ == "__main__":

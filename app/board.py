@@ -2,6 +2,8 @@
 
 from typing import Optional
 
+from app.constants import BROKEN, NON_EXISTENT_DIRECTION
+
 direction_map: dict[int, str] = {
     0: "N",
     1: "E",
@@ -15,8 +17,6 @@ direction_map_to_number: dict[str, int] = {
     "S": 2,
     "W": 3,
 }
-BROKEN = "No more instructions"
-NON_EXISTENT_DIRECTION = "Can't parse non existent direction"
 
 
 class Board:
