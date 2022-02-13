@@ -80,7 +80,7 @@ class Board:
         first_line = self.lines[0].split(" ")
         self.set_robot_x(int(first_line[0]))
         self.set_robot_y(int(first_line[1]))
-        if len(first_line[2]) and first_line[2] in "NEWS":
+        if len(first_line[2]) == 1 and first_line[2] in "NEWS":
             self.set_direction(first_line[2])
         else:
             return NON_EXISTANT_DIRECTION
