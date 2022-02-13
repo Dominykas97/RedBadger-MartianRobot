@@ -1,5 +1,7 @@
-from cairo import Status
-from app import Board
+# from app import Board
+
+
+from app.board import Board
 
 
 def main():

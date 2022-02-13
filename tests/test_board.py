@@ -1,6 +1,6 @@
 import unittest
 
-from app import Board
+from app.board import Board
 
 class TestBoard(unittest.TestCase):
     board = Board("input.txt")
