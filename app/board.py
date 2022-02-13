@@ -16,7 +16,7 @@ direction_map_to_number: dict[str, int] = {
     "W": 3,
 }
 BROKEN = "No more instructions"
-NON_EXISTANT_DIRECTION = "Can't parse non exsitant direction"
+NON_EXISTENT_DIRECTION = "Can't parse non existent direction"
 
 
 class Board:
@@ -84,7 +84,7 @@ class Board:
         if len(first_line[2]) == 1 and first_line[2] in "NEWS":
             self.set_direction(first_line[2])
         else:
-            return NON_EXISTANT_DIRECTION
+            return NON_EXISTENT_DIRECTION
         movement: str = self.lines[1]
         self.lines = self.lines[3:]
         return movement
@@ -92,7 +92,7 @@ class Board:
     def next(self) -> str:
         """Processes next robot's movement."""
         movement: str = self.get_next_robot_instructions()
-        if movement in [BROKEN, NON_EXISTANT_DIRECTION]:
+        if movement in [BROKEN, NON_EXISTENT_DIRECTION]:
             print(movement)
             return movement
         self.lost = False
@@ -103,10 +103,11 @@ class Board:
         for move in movement:
             scent: bool = True
             if move == "L":
+                # if robot is pointing north(0), make it point west(3)
                 self.direction = (self.direction + 4 - 1) % 4
-            if move == "R":
+            elif move == "R":
                 self.direction = (self.direction + 1) % 4
-            if move == "F":
+            elif move == "F":
                 if (
                     direction_map.get(self.direction) == "N"
                     and self.robot_y < self.board_y
@@ -127,8 +128,9 @@ class Board:
             if not scent:
                 self.lost = True
                 break
-        print(self.get_status())
-        return self.get_status()
+        status = self.get_status()
+        print(status)
+        return status
 
     def check_present_scent(self) -> bool:
         """Checks if scent is present in scents dictionary.

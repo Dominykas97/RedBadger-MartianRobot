@@ -40,7 +40,7 @@ class TestBoard(unittest.TestCase):
         board2 = Board("broken_direction.txt")
 
         status = board2.next()
-        self.assertEqual(status, "Can't parse non exsitant direction", "")
+        self.assertEqual(status, "Can't parse non existent direction", "")
 
     def test7_movement(self):
         status = self.board3.next()
