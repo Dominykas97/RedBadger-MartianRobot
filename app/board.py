@@ -8,7 +8,8 @@ direction_map: dict[int, str] = {
     2: "S",
     3: "W",
 }
-direction_map2: dict[str, int] = {
+
+direction_map_to_number: dict[str, int] = {
     "N": 0,
     "E": 1,
     "S": 2,
@@ -23,6 +24,10 @@ class Board:
 
     lines: list[str] = []
     scents: dict[str, int] = {}
+    robot_x: int
+    robot_y: int
+    direction: int
+    lost: bool = False
 
     def __init__(self, filename: str):
 
@@ -32,10 +37,6 @@ class Board:
             self.board_x: int = int(first_line[0])
             self.board_y: int = int(first_line[1])
             self.lines: list[str] = lines[1:]
-        self.robot_x: int
-        self.robot_y: int
-        self.direction: int
-        self.lost: bool = False
 
     def get_robot_x(self) -> int:
         """Gets robot's x coordinate."""
@@ -61,7 +62,7 @@ class Board:
     def set_direction(self, new_direction: str) -> None:
         """Sets robot's direction internally as a integer.
         Possible values: [0, 1, 2, 3]."""
-        self.direction = direction_map2.get(new_direction, -1)
+        self.direction = direction_map_to_number.get(new_direction, -1)
 
     def get_status(self) -> str:
         """Gets robot's x, y coordinates and direction as string.
@@ -73,9 +74,9 @@ class Board:
         return status
 
     def get_next_robot_instructions(self) -> str:
-        """Gets next robot movement from file in memory"""
+        """Gets next robot movement from file in memory."""
 
-        if len(self.lines) == 0:
+        if not self.lines:
             return BROKEN
         first_line = self.lines[0].split(" ")
         self.set_robot_x(int(first_line[0]))
@@ -89,13 +90,12 @@ class Board:
         return movement
 
     def next(self) -> str:
-        """Processes next robot movement"""
+        """Processes next robot's movement."""
         movement: str = self.get_next_robot_instructions()
         if movement in [BROKEN, NON_EXISTANT_DIRECTION]:
             print(movement)
             return movement
         self.lost = False
-        # print(f"INIT: {self.get_status()}")
 
         #  0
         # 3 1
@@ -123,10 +123,6 @@ class Board:
                     self.robot_x -= 1
                 else:
                     scent = self.check_present_scent()
-
-            # print(self.direction)
-            # print(move)
-            # print(f"{self.x} {self.y} {self.get_direction()}")
 
             if not scent:
                 self.lost = True

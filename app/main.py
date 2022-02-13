@@ -1,5 +1,5 @@
-from app.board import Board
 import argparse
+from app.board import Board
 
 
 def main():
