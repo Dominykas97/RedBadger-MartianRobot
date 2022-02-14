@@ -1,15 +1,13 @@
 # RedBadger-MartianRobot exercise solution
 
 ## How to run
-For my machine `export PYTHONPATH=.` needed to be run before python could work
 
-
-`make run` runs *app/main.py*
+`make run` runs *main.py*
 
 `make test` runs *tests/test_board.py*
 
 If needed, custom filenames can be passed as such
-`python app/main.py -f moving_test.txt`
+`python main.py -f moving_test.txt`
 
 ## Areas to improve
 - CI/CD
