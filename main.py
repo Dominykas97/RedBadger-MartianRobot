@@ -1,4 +1,5 @@
 import argparse
+
 from app.board import Board
 from app.constants import BROKEN
 

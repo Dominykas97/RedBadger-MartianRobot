@@ -1,4 +1,4 @@
 run:
-	python app/main.py
+	python main.py
 test:
-	python tests/test_board.py
+	python -m unittest tests/test_*

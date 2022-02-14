@@ -113,14 +113,14 @@ class Board:
                     and self.robot_y < self.board_y
                 ):
                     self.robot_y += 1
-                elif direction_map.get(self.direction) == "S" and self.robot_y > 0:
+                elif direction_map.get(self.direction) == "S" and self.robot_y:
                     self.robot_y -= 1
                 elif (
                     direction_map.get(self.direction) == "E"
                     and self.robot_x < self.board_x
                 ):
                     self.robot_x += 1
-                elif direction_map.get(self.direction) == "W" and self.robot_x > 0:
+                elif direction_map.get(self.direction) == "W" and self.robot_x:
                     self.robot_x -= 1
                 else:
                     scent = self.check_present_scent()
